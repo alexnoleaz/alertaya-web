@@ -1,0 +1,11 @@
+<div class="card shadow-sm p-3">
+  <h5 class="mb-3">Alertas por provincia</h5>
+  <ul class="list-group">
+    <li *ngFor="let prov of provincias" class="list-group-item d-flex justify-content-between align-items-center">
+      {{ prov.nombre }} - {{ prov.lluvia }} mm/h
+      <span class="badge bg-{{ getBadgeColor(prov.nivel) }}">
+        {{ prov.nivel }}
+      </span>
+    </li>
+  </ul>
+</div>

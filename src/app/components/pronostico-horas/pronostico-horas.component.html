@@ -1,0 +1,12 @@
+<div class="card p-3 shadow-sm">
+  <h5 class="mb-3">Pronóstico próximas horas</h5>
+  <div class="d-flex gap-3 overflow-auto">
+    <div *ngFor="let hora of pronostico" class="card text-white bg-{{ getColor(hora.intensidad) }} mb-3" style="min-width: 160px;">
+      <div class="card-body text-center">
+        <h6 class="card-title">{{ hora.hora }}</h6>
+        <p class="card-text mb-0">{{ hora.intensidad }}</p>
+        <small>{{ hora.valor }} mm/h</small>
+      </div>
+    </div>
+  </div>
+</div>

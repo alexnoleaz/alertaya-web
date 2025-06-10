@@ -1,0 +1,44 @@
+<div class="card shadow-sm p-3">
+  <h5 class="mb-3">Recomendaciones por provincia</h5>
+
+  <div class="mb-3">
+    <label for="provincia" class="form-label">Selecciona una provincia:</label>
+    <select class="form-select" id="provincia" #selector (change)="seleccionarProvincia(selector.value)">
+      <option disabled selected>-- Selecciona --</option>
+      <option *ngFor="let p of provincias" [value]="p.nombre">{{ p.nombre }}</option>
+    </select>
+  </div>
+
+  <div *ngIf="provinciaSeleccionada">
+    <p><strong>{{ provinciaSeleccionada.nombre }}</strong>: {{ lluvia }} mm/h</p>
+
+    <div *ngIf="nivel === 'Fuerte'" class="text-danger">
+      <ul>
+        <li>Evita sembrar durante las próximas horas.</li>
+        <li>Protege tus herramientas y maquinaria.</li>
+        <li>Verifica el estado de los drenajes en los campos.</li>
+      </ul>
+    </div>
+
+    <div *ngIf="nivel === 'Moderada'" class="text-warning">
+      <ul>
+        <li>Planifica con anticipación tareas sensibles.</li>
+        <li>Supervisa cultivos vulnerables a la humedad.</li>
+      </ul>
+    </div>
+
+    <div *ngIf="nivel === 'Suave'" class="text-info">
+      <ul>
+        <li>Realiza tareas agrícolas con precaución.</li>
+        <li>Monitorea los cambios en el clima.</li>
+      </ul>
+    </div>
+
+    <div *ngIf="nivel === 'Sin alerta'" class="text-success">
+      <ul>
+        <li>No se reportan lluvias intensas actualmente.</li>
+        <li>Aprovecha el clima estable para labores de campo.</li>
+      </ul>
+    </div>
+  </div>
+</div>

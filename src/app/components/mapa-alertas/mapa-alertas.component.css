@@ -1,0 +1,10 @@
+.map-container {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+iframe {
+  border: none;
+  border-radius: 12px;
+}

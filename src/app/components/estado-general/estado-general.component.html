@@ -1,0 +1,12 @@
+<div *ngIf="estado" class="card shadow-sm p-3">
+  <h5 class="mb-3">Estado General</h5>
+  <ul class="list-unstyled">
+    <li><strong>Tipo:</strong> {{ estado.tipo }}</li>
+    <li><strong>Descripción:</strong> {{ estado.descripcion }}</li>
+    <li><strong>Última actualización:</strong> {{ estado.fecha }}</li>
+    <li><strong>Intensidad:</strong> {{ estado.intensidad }}</li>
+    <li><strong>Visibilidad:</strong> {{ estado.visibilidad }}</li>
+    <li><strong>Viento:</strong> {{ estado.viento }}</li>
+  </ul>
+</div>
+
