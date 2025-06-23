@@ -25,11 +25,12 @@ pronostico: any[] = [];
   }
 
   getIntensidad(valor: number): string {
-    if (!valor || valor === 0) return 'Sin lluvia';
-    if (valor < 2) return 'Suave';
-    if (valor < 10) return 'Moderada';
-    return 'Fuerte';
-  }
+  if (!valor || valor === 0) return 'Sin alerta';
+  if (valor <= 2.5) return 'Suave';
+  if (valor <= 7.6) return 'Moderada';
+  return 'Fuerte';
+}
+
 
   getColor(intensidad: string): string {
     switch (intensidad) {
