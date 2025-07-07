@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MapaAlertasComponent implements OnInit {
   mapa: any;
+  marker: any;
   latitud!: number;
   longitud!: number;
   ubicacionDetectada: boolean = false;
@@ -25,6 +26,26 @@ export class MapaAlertasComponent implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
     }).addTo(this.mapa);
+
+    this.mapa.on('click', (e: any) => {
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+
+      this.latitud = lat;
+      this.longitud = lng;
+
+      localStorage.setItem('latitud', lat.toString());
+      localStorage.setItem('longitud', lng.toString());
+
+      this.ubicacionDetectada = true;
+
+      if (this.marker) {
+        this.mapa.removeLayer(this.marker);
+      }
+
+      this.marker = L.marker([lat, lng])
+        .addTo(this.mapa)
+    });
   }
 
   obtenerUbicacionActual(): void {
@@ -40,7 +61,10 @@ export class MapaAlertasComponent implements OnInit {
 
           this.mapa.setView([this.latitud, this.longitud], 14);
 
-          L.marker([this.latitud, this.longitud])
+          if (this.marker) {
+            this.mapa.removeLayer(this.marker);
+          }
+          this.marker = L.marker([this.latitud, this.longitud])
             .addTo(this.mapa)
             .bindPopup('Estás aquí')
             .openPopup();
@@ -53,6 +77,7 @@ export class MapaAlertasComponent implements OnInit {
       console.warn('Geolocalización no es soportada por este navegador.');
     }
   }
+
   registrarUbicacion(): void {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
