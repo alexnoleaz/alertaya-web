@@ -1,0 +1,11 @@
+<div class="card shadow-sm p-3">
+  <h5 class="mb-3">Mapa de Alerta</h5>
+
+  <div id="mapa" style="height: 350px; border-radius: 8px;"></div>
+
+  <div class="mt-3 text-center">
+    <button class="btn btn-primary" (click)="registrarUbicacion()" [disabled]="!ubicacionDetectada">
+      Usar esta ubicación para recibir alertas de lluvia
+    </button>
+  </div>
+</div>

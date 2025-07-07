@@ -1,25 +1,39 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports:[FormsModule]
+  imports: [FormsModule],
 })
 export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   login() {
-    // Validación básica (solo para prueba de navegación)
-    if (this.username === 'admin' && this.password === '1234') {
-      this.router.navigate(['/inicio']); // redirige al inicio
-    } else {
-      alert('Usuario o contraseña incorrectos');
-    }
+    this.authService
+      .login({
+        email: this.username,
+        password: this.password,
+      })
+      .subscribe({
+        next: (res) => {
+          const token = res.data.accessToken;
+          const userId = res.data.userId;
+          localStorage.setItem('token', res.data.accessToken);
+          localStorage.setItem('userId', res.data.userId.toString());
+          this.router.navigate(['/inicio']).then(() => {
+            window.location.reload();
+          });
+        },
+        error: () => {
+          alert('Usuario o contraseña incorrectos');
+        },
+      });
   }
 }

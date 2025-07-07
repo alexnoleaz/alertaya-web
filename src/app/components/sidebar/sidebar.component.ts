@@ -1,4 +1,3 @@
-import { RecargaService } from './../../services/recarga.service';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -10,9 +9,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-constructor(private RecargaService : RecargaService) {}
 
-  recargar() {
-    this.RecargaService.emitirRecarga();
-  }
+
 }
