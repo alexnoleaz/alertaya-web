@@ -4,24 +4,29 @@
   </h5>
   <div *ngIf="estado">
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <strong>Tipo de clima:</strong> {{ estado?.tipo }}
+      <li class="list-group-item d-flex justify-content-between border-0">
+        <strong>Tipo de clima:</strong>
+        <span>{{ estado?.tipo }}</span>
       </li>
-
-      <li class="list-group-item">
-        <strong>Descripción:</strong> {{ estado?.descripcion }}
+      <li class="list-group-item d-flex justify-content-between border-0">
+        <strong>Descripción:</strong>
+        <span class="text-capitalize">{{ estado?.descripcion }}</span>
       </li>
-      <li class="list-group-item">
-        <strong>Última actualización:</strong> {{ estado?.fecha }}
+      <li class="list-group-item d-flex justify-content-between border-0">
+        <strong>Última actualización:</strong>
+        <span>{{ estado?.fecha }}</span>
       </li>
-      <li class="list-group-item">
-        <strong>Intensidad:</strong> {{ estado?.intensidad }}
+      <li class="list-group-item d-flex justify-content-between border-0">
+        <strong>Intensidad:</strong>
+        <span>{{ estado?.intensidad }}</span>
       </li>
-      <li class="list-group-item">
-        <strong>Visibilidad:</strong> {{ estado?.visibilidad }}
+      <li class="list-group-item d-flex justify-content-between border-0">
+        <strong>Visibilidad:</strong>
+        <span>{{ estado?.visibilidad }}</span>
       </li>
-      <li class="list-group-item">
-        <strong>Viento:</strong> {{ estado?.viento }}
+      <li class="list-group-item d-flex justify-content-between border-0">
+        <strong>Viento:</strong>
+        <span>{{ estado?.viento }}</span>
       </li>
     </ul>
   </div>

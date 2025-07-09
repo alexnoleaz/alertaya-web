@@ -1,43 +1,64 @@
 import { ClimaService } from './../../services/clima.service';
 import { NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
+import {
+  trigger,
+  style,
+  transition,
+  animate
+} from '@angular/animations';
 
 @Component({
   selector: 'app-pronostico-horas',
   imports: [NgFor],
   templateUrl: './pronostico-horas.component.html',
   styleUrl: './pronostico-horas.component.css',
-  standalone: true
+  standalone: true,
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms ease-in', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class PronosticoHorasComponent {
-pronostico: any[] = [];
+  pronostico: any[] = [];
+  pronosticoAgrupado: any[][] = [];
 
   constructor(private climaService: ClimaService) {}
 
   ngOnInit(): void {
     this.climaService.obtenerPronostico().subscribe((data) => {
-      this.pronostico = data.list.slice(0, 4).map((p: any) => ({
-        hora: new Date(p.dt_txt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        intensidad: this.getIntensidad(p.rain?.['3h']),
-        valor: p.rain?.['3h'] ?? 0
-      }));
+      const datos = data.list.slice(0, 15).map((p: any) => {
+        const fecha = new Date(p.dt * 1000);
+        return {
+          temp: Math.round(p.main.temp),
+          descripcion: p.weather[0].main,
+          hora: fecha.toLocaleTimeString([], { hour: 'numeric', hour12: true }),
+          periodo: fecha.toLocaleTimeString([], { hour12: true }).includes("AM") ? "AM" : "PM",
+          lluvia: p.rain?.['3h'] ?? 0
+        };
+      });
+
+      for (let i = 0; i < datos.length; i += 5) {
+        this.pronosticoAgrupado.push(datos.slice(i, i + 5));
+      }
     });
   }
-
-  getIntensidad(valor: number): string {
-  if (!valor || valor === 0) return 'Sin alerta';
-  if (valor <= 2.5) return 'Suave';
-  if (valor <= 7.6) return 'Moderada';
-  return 'Fuerte';
-}
-
-
-  getColor(intensidad: string): string {
-    switch (intensidad) {
-      case 'Fuerte': return 'danger';
-      case 'Moderada': return 'warning';
-      case 'Suave': return 'info';
-      default: return 'success';
+  getIconoClima(descripcion: string): string {
+    switch (descripcion.toLowerCase()) {
+      case 'clear':
+      case 'sun':
+        return 'bi bi-sun';
+      case 'clouds':
+        return 'bi bi-cloud';
+      case 'rain':
+        return 'bi bi-cloud-rain-heavy';
+      default:
+        return 'bi bi-cloud-fog';
     }
   }
+
 }

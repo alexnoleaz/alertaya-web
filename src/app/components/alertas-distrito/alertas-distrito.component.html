@@ -1,20 +1,27 @@
 <div class="card shadow-sm mb-3">
   <div class="card-body">
     <h5 class="card-title">Alertas por provincia</h5>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item d-flex justify-content-between align-items-center"
-          *ngFor="let prov of provincias">
-        <div class="d-flex align-items-center">
-          <i class="bi bi-cloud-rain-fill me-2 text-primary"></i>
-          <strong>{{ prov.nombre }}</strong>
-        </div>
-        <div class="text-end">
-          <span class="badge rounded-pill bg-{{ getBadgeColor(prov.nivel) }} me-2">
-            {{ prov.nivel }}
-          </span>
-          <small class="text-muted">{{ prov.lluvia }} mm/h</small>
-        </div>
-      </li>
-    </ul>
+
+    <div style="max-height: 215px; overflow-y: auto;">
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let prov of provincias"
+        >
+          <div class="d-flex align-items-center">
+            <i class="bi bi-cloud-rain-fill me-2 text-primary"></i>
+            <strong>{{ prov.nombre }}</strong>
+          </div>
+          <div class="text-end">
+            <span
+              class="badge rounded-pill bg-{{ getBadgeColor(prov.nivel) }} me-2"
+            >
+              {{ prov.nivel }}
+            </span>
+            <small class="text-muted">{{ prov.lluvia }} mm/h</small>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

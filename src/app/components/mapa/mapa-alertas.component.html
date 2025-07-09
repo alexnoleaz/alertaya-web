@@ -1,6 +1,44 @@
 <div class="card shadow-sm p-3">
   <h5 class="mb-3">Mapa de Alerta</h5>
 
-  <div id="mapa" style="height: 350px; border-radius: 8px;"></div>
+  <div id="mapa" style="height: 350px; border-radius: 8px"></div>
 
+  <div class="mt-3">
+    <label for="nombreUbicacion">Nombre de la ubicación:</label>
+    <input
+      type="text"
+      id="nombreUbicacion"
+      class="form-control"
+      [(ngModel)]="nombreUbicacion"
+      placeholder="Ej. Mi casa"
+    />
+  </div>
+
+  <div class="mt-3">
+    <label for="rangoAlerta">Nivel de alerta:</label>
+    <input
+      type="range"
+      id="rangoAlerta"
+      class="form-range"
+      min="0"
+      max="2"
+      [(ngModel)]="nivelAlertaSlider"
+    />
+    <p class="mt-2">
+      <strong>{{ getNombreAlerta(nivelAlertaSlider) }}</strong>
+      <span class="text-muted"
+        >({{ getDescripcionAlerta(nivelAlertaSlider) }})</span
+      >
+    </p>
+  </div>
+
+  <div class="mt-3 text-center">
+    <button
+      class="btn btn-primary"
+      (click)="registrarUbicacion()"
+      [disabled]="!ubicacionDetectada"
+    >
+      Usar esta ubicación para recibir alertas de lluvia
+    </button>
+  </div>
 </div>

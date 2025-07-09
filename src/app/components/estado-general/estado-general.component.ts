@@ -2,7 +2,6 @@ import { ClimaService } from './../../services/clima.service';
 import { Component, OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
 
-
 @Component({
   selector: 'app-estado-general',
   standalone: true,
@@ -13,14 +12,10 @@ import { NgIf } from '@angular/common';
 export class EstadoGeneralComponent implements OnInit {
   estado: any = null;
 
-  constructor(
-    private ClimaService: ClimaService,
-
-  ) {}
+  constructor(private ClimaService: ClimaService) {}
 
   ngOnInit(): void {
     this.cargarDatos();
-
   }
 
   private traducirTipo(tipo: string): string {
@@ -46,7 +41,7 @@ export class EstadoGeneralComponent implements OnInit {
   }
 
   nivel: string = '';
-colorNivel: string = '';
+  colorNivel: string = '';
 
   getNivel(valor: number): string {
     if (!valor || valor === 0) return 'Sin alerta';
@@ -54,14 +49,18 @@ colorNivel: string = '';
     if (valor <= 7.6) return 'Moderada';
     return 'Fuerte';
   }
-getBadgeColor(nivel: string): string {
-  switch (nivel) {
-    case 'Fuerte': return 'danger';
-    case 'Moderada': return 'warning';
-    case 'Suave': return 'info';
-    default: return 'success';
+  getBadgeColor(nivel: string): string {
+    switch (nivel) {
+      case 'Fuerte':
+        return 'danger';
+      case 'Moderada':
+        return 'warning';
+      case 'Suave':
+        return 'info';
+      default:
+        return 'success';
+    }
   }
-}
 
   cargarDatos(): void {
     this.ClimaService.obtenerClimaActual().subscribe((data) => {

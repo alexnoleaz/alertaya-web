@@ -1,7 +1,11 @@
-nav {
-  height: 60px;
+.btn-salir {
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  background-color: transparent;
+  transition: all 0.3s ease;
 }
 
-img {
-  object-fit: contain;
+.btn-salir:hover {
+  background-color: #dc3545;
+  color: #fff;
 }

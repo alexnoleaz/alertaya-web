@@ -6,7 +6,6 @@ import { EstadoGeneralComponent } from '../../components/estado-general/estado-g
 import { MapaAlertasComponent } from '../../components/mapa/mapa-alertas.component';
 import { PronosticoHorasComponent } from '../../components/pronostico-horas/pronostico-horas.component';
 import { RecomendacionesComponent } from '../../components/recomendaciones/recomendaciones.component';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 
 @Component({
@@ -20,7 +19,6 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
     MapaAlertasComponent,
     PronosticoHorasComponent,
     RecomendacionesComponent,
-    SidebarComponent
   ],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'

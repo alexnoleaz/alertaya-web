@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mapa-alertas',
   templateUrl: './mapa-alertas.component.html',
   styleUrls: ['./mapa-alertas.component.css'],
+  imports: [FormsModule],
 })
 export class MapaAlertasComponent implements OnInit {
   mapa: any;
@@ -13,6 +15,9 @@ export class MapaAlertasComponent implements OnInit {
   latitud!: number;
   longitud!: number;
   ubicacionDetectada: boolean = false;
+  nombreUbicacion: string = '';
+  nivelAlerta: string = 'MODERATE';
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -43,8 +48,7 @@ export class MapaAlertasComponent implements OnInit {
         this.mapa.removeLayer(this.marker);
       }
 
-      this.marker = L.marker([lat, lng])
-        .addTo(this.mapa)
+      this.marker = L.marker([lat, lng]).addTo(this.mapa);
     });
   }
 
@@ -77,16 +81,43 @@ export class MapaAlertasComponent implements OnInit {
       console.warn('Geolocalización no es soportada por este navegador.');
     }
   }
+  nivelAlertaSlider: number = 1;
+
+  getNombreAlerta(valor: number): string {
+    switch (valor) {
+      case 0:
+        return 'Suave ';
+      case 1:
+        return 'Moderada ';
+      case 2:
+        return 'Alta ';
+      default:
+        return '';
+    }
+  }
+
+  getDescripcionAlerta(valor: number): string {
+    switch (valor) {
+      case 0:
+        return 'Lluvias ligeras. Cantidad de lluvia menor a 2.5mm/h';
+      case 1:
+        return 'Posible afectación. Cantidad de lluvia menor de 7.5mm/h';
+      case 2:
+        return 'Lluvias intensas, riesgo elevado. Cantidad de lluvia mayor a 7.5mm/h';
+      default:
+        return '';
+    }
+  }
 
   registrarUbicacion(): void {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
 
     const body = {
-      name: 'Ubicación actual',
+      name: this.nombreUbicacion,
       latitude: this.latitud,
       longitude: this.longitud,
-      alertThreshold: 'MODERATE',
+      alertThreshold: this.nivelAlerta,
     };
 
     this.http

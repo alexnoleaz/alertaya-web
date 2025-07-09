@@ -1,12 +1,21 @@
-<nav class="d-flex justify-content-between align-items-center p-3 shadow bg-white">
-  <div class="d-flex align-items-center gap-2">
-    <span class="fw-bold text-success text-dark">AlertaYa</span>
-  </div>
-
-  <div class="d-flex align-items-center gap-3">
-    <div class="text-end">
-      <strong class="text-dark">{{ userName }}</strong><br>
+<nav
+  class="navbar shadow-sm fixed-top fade-in"
+  style="z-index: 1050;"
+  @slideIn
+>
+  <div class="container-fluid d-flex justify-content-between align-items-center px-4">
+    <div class="d-flex align-items-center gap-2">
+      <span class="fw-bold text-dark fs-5">AlertaYa</span>
     </div>
-    <button class="btn btn-outline-danger btn-sm" (click)="logout()">Salir</button>
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="text-end">
+        <strong class="text-dark">{{ userName }}</strong>
+      </div>
+      <button class="btn btn-salir btn-sm d-flex align-items-center gap-1" (click)="logout()">
+  <i class="bi bi-box-arrow-right"></i>
+  Salir
+</button>
+    </div>
   </div>
 </nav>

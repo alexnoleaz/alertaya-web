@@ -1,12 +1,32 @@
-<div class="row row-cols-2 row-cols-md-4 g-3">
-  <div class="col" *ngFor="let hora of pronostico">
-    <div class="card h-100 shadow-sm border-0">
-      <div class="card-body text-center">
-        <i class="bi bi-cloud-rain-fill fs-1 mb-2 text-primary"></i>
-        <h6 class="card-title mb-1 fw-bold">{{ hora.hora }}</h6>
-        <small class="text-muted">{{ hora.valor }} mm/h</small>
+<div id="weatherCarousel" class="carousel slide m-5" data-bs-ride="carousel" data-bs-interval="3000" @fadeIn>
+
+  <div class="carousel-indicators">
+    <button *ngFor="let grupo of pronosticoAgrupado; let i = index"
+      type="button"
+      [attr.data-bs-target]="'#weatherCarousel'"
+      [attr.data-bs-slide-to]="i"
+      [class.active]="i === 0"
+      [attr.aria-current]="i === 0 ? 'true' : null"
+      [attr.aria-label]="'Slide ' + (i + 1)"
+      class="bg-secondary">
+    </button>
+  </div>
+
+  <div class="carousel-inner">
+    <div
+      class="carousel-item"
+      *ngFor="let grupo of pronosticoAgrupado; let i = index"
+      [class.active]="i === 0"
+    >
+      <div class="d-flex justify-content-around text-center align-items-center px-5 bg-body-tertiary"
+           style="height: 230px">
+        <div class="flex-column" *ngFor="let hora of grupo">
+          <p class="small"><strong>{{ hora.temp }}°C</strong></p>
+          <i [class]="getIconoClima(hora.descripcion) + ' fs-2 mb-2'" style="color: #ddd;"></i>
+          <p class="mb-0"><strong>{{ hora.hora }}</strong></p>
+          <p class="mb-0 text-muted" style="font-size: .7rem;">{{ hora.lluvia }} mm/h</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
