@@ -6,6 +6,7 @@
   <div class="mt-3">
     <label class="form-label">Nombre de la ubicación:</label>
     <input
+      name="nombreUbicacion"
       type="text"
       class="form-control"
       [(ngModel)]="nombreUbicacion"
@@ -34,7 +35,7 @@
     <button
       class="btn btn-dark w-100"
       (click)="registrarUbicacion()"
-      [disabled]="!ubicacionDetectada"
+      [disabled]="!ubicacionDetectada || nombreUbicacion.trim().length === 0"
     >
       Usar esta ubicación para recibir alertas de lluvia
     </button>

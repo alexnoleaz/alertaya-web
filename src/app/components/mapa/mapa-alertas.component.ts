@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../shared/local-storage.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-mapa-alertas',
