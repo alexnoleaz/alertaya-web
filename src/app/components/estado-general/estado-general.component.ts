@@ -6,7 +6,6 @@ import { NgIf } from '@angular/common';
   selector: 'app-estado-general',
   standalone: true,
   templateUrl: './estado-general.component.html',
-  styleUrls: ['./estado-general.component.css'],
   imports: [NgIf],
 })
 export class EstadoGeneralComponent implements OnInit {
@@ -65,12 +64,14 @@ export class EstadoGeneralComponent implements OnInit {
   cargarDatos(): void {
     this.ClimaService.obtenerClimaActual().subscribe((data) => {
       this.estado = {
-        tipo: this.traducirTipo(data.weather[0].main),
-        descripcion: data.weather[0].description,
+        tipo: this.traducirTipo(data.data.weather[0].main),
+        descripcion: data.data.weather[0].description,
         fecha: new Date().toLocaleString(),
-        intensidad: data.rain?.['1h'] ? `${data.rain['1h']} mm/h` : '0 mm/h',
-        visibilidad: `${data.visibility / 1000} km`,
-        viento: `${data.wind.speed} km/h`,
+        intensidad: data.data.rain?.['1h']
+          ? `${data.data.rain['1h']} mm/h`
+          : '0 mm/h',
+        visibilidad: `${data.data.visibility / 1000} km`,
+        viento: `${data.data.wind.speed} km/h`,
       };
     });
   }

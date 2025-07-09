@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
-import { InicioComponent } from './pages/inicio/inicio.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { HomePage } from './pages/home/home.page';
+
+import { LoginPage } from './auth/pages/login/login.page';
+import { RegisterPage } from './auth/pages/register/register.page';
+import { HomePage } from './home/home.page';
+import { LandingPage } from './landing/landing.page';
+import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomePage },
-  { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegisterComponent },
-  { path: 'inicio', component: InicioComponent },
+  { path: '', component: LandingPage },
+  { path: 'auth/iniciar-sesion', component: LoginPage },
+  { path: 'auth/registrarse', component: RegisterPage },
+  { path: 'inicio', component: HomePage, canActivate: [authGuard] },
 ];

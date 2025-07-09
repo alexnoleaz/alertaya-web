@@ -1,26 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Response } from '../shared/response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClimaService {
-  private apiKey = 'a4ee941c8c441d3d249c326f1510892b';
-  private baseUrl = 'https://api.openweathermap.org/data/2.5';
+  private readonly httpClient: HttpClient;
 
-  constructor(private http: HttpClient) {}
+  constructor(httpClient: HttpClient) {
+    this.httpClient = httpClient;
+  }
 
-  obtenerClimaActual(): Observable<any> {
-    const url = `${this.baseUrl}/weather?q=Trujillo,PE&units=metric&appid=${this.apiKey}&lang=es`;
-    return this.http.get(url);
+  obtenerClimaActual(): Observable<Response<any>> {
+    return this.httpClient.get<Response<any>>(
+      'weather/current?lat=-8.111944&lon=-79.028611'
+    );
   }
   obtenerPronostico(): Observable<any> {
-    const url = `${this.baseUrl}/forecast?q=Trujillo,PE&units=metric&appid=${this.apiKey}&lang=es`;
-    return this.http.get(url);
+    return this.httpClient.get<Response<any>>(
+      'weather/forecast?lat=-8.111944&lon=-79.028611'
+    );
   }
-  obtenerClimaPorCoord(lat: number, lon: number): Observable<any> {
-    const url = `${this.baseUrl}/weather?lat=${lat}&lon=${lon}&units=metric&appid=${this.apiKey}&lang=es`;
-    return this.http.get(url);
+  obtenerClimaPorCoord(lat: number, lon: number): Observable<Response<any>> {
+    return this.httpClient.get<Response<any>>(
+      `weather/current?lat=${lat}&lon=${lon}`
+    );
   }
 }

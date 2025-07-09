@@ -1,0 +1,53 @@
+<section id="hero" class="hero">
+  <div class="overlay">
+    <div class="container text-center">
+      <h1 class="text-white">AlertaYa</h1>
+      <p class="text-light">
+        Evita pérdidas agrícolas con alertas de lluvia intensas y
+        personalizadas.
+      </p>
+      <button class="btn btn-primary mt-4" (click)="scrollToLogeo()">
+        Comienza ahora
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="features text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="feature-icon">⛈️</div>
+        <h4>Alertas en tiempo real</h4>
+        <p>Recibe notificaciones según la intensidad de lluvia que elijas.</p>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-icon">🌾</div>
+        <h4>Minimiza pérdidas</h4>
+        <p>Anticípate a lluvias intensas y protege tu producción.</p>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-icon">📱</div>
+        <h4>Fácil acceso</h4>
+        <p>Disponible desde cualquier dispositivo, sin complicaciones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="logeo" #logeoa>
+  <div class="container text-center">
+    <h2>¿Estás listo para tomar el control frente a la lluvia?</h2>
+    <p class="lead">Únete a cientos de agricultores que ya usan AlertaYa.</p>
+    <a routerLink="auth/iniciar-sesion" class="btn btn-dark mt-3 me-3"
+      >Iniciar sesión</a
+    >
+    <a routerLink="auth/registrarse" class="btn btn-dark mt-3"
+      >¡Regístrate ahora!</a
+    >
+  </div>
+</section>
+
+<footer class="footer">
+  <p>&copy; 2025 AlertaYa. Todos los derechos reservados.</p>
+</footer>

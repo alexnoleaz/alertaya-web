@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../users/user.service';
 import {
   trigger,
   style,
   animate,
   transition,
-  state
+  state,
 } from '@angular/animations';
+import { LocalStorageService } from '../../shared/local-storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,25 +20,40 @@ import {
     trigger('slideIn', [
       transition(':enter', [
         style({ transform: 'translateY(-100%)', opacity: 0 }),
-        animate('500ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
-      ])
-    ])
-  ]
+        animate(
+          '500ms ease-out',
+          style({ transform: 'translateY(0)', opacity: 1 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class NavbarComponent implements OnInit {
   userName: string = '';
   userRole: string = '';
 
-  constructor(private router: Router, private userService: UserService) {}
+  private readonly router: Router;
+  private readonly userService: UserService;
+  private readonly localStorageService: LocalStorageService;
+
+  constructor(
+    router: Router,
+    userService: UserService,
+    localStorageService: LocalStorageService
+  ) {
+    this.router = router;
+    this.userService = userService;
+    this.localStorageService = localStorageService;
+  }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
+    const token = this.localStorageService.getString('token');
+    const userId = this.localStorageService.getNumber('userId');
 
     if (token && userId) {
-      this.userService.getUserById(Number(userId), token).subscribe({
+      this.userService.getUserById(Number(userId)).subscribe({
         next: (res) => {
-          this.userName = res.data.name;
+          this.userName = res.data!.name;
         },
         error: () => {
           console.error('No se pudo obtener el usuario');
@@ -47,7 +63,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    this.localStorageService.clear();
+    this.router.navigate(['auth/iniciar-sesion']);
   }
 }

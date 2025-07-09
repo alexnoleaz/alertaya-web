@@ -1,27 +1,21 @@
 import { ClimaService } from './../../services/clima.service';
 import { NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  trigger,
-  style,
-  transition,
-  animate
-} from '@angular/animations';
+import { trigger, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-pronostico-horas',
   imports: [NgFor],
   templateUrl: './pronostico-horas.component.html',
-  styleUrl: './pronostico-horas.component.css',
   standalone: true,
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('500ms ease-in', style({ opacity: 1 }))
-      ])
-    ])
-  ]
+        animate('500ms ease-in', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class PronosticoHorasComponent {
   pronostico: any[] = [];
@@ -31,14 +25,16 @@ export class PronosticoHorasComponent {
 
   ngOnInit(): void {
     this.climaService.obtenerPronostico().subscribe((data) => {
-      const datos = data.list.slice(0, 15).map((p: any) => {
+      const datos = data.data.list.slice(0, 15).map((p: any) => {
         const fecha = new Date(p.dt * 1000);
         return {
           temp: Math.round(p.main.temp),
           descripcion: p.weather[0].main,
           hora: fecha.toLocaleTimeString([], { hour: 'numeric', hour12: true }),
-          periodo: fecha.toLocaleTimeString([], { hour12: true }).includes("AM") ? "AM" : "PM",
-          lluvia: p.rain?.['3h'] ?? 0
+          periodo: fecha.toLocaleTimeString([], { hour12: true }).includes('AM')
+            ? 'AM'
+            : 'PM',
+          lluvia: p.rain?.['3h'] ?? 0,
         };
       });
 
@@ -47,6 +43,7 @@ export class PronosticoHorasComponent {
       }
     });
   }
+
   getIconoClima(descripcion: string): string {
     switch (descripcion.toLowerCase()) {
       case 'clear':
@@ -60,5 +57,4 @@ export class PronosticoHorasComponent {
         return 'bi bi-cloud-fog';
     }
   }
-
 }

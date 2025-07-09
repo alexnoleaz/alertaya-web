@@ -1,32 +1,49 @@
-<div id="weatherCarousel" class="carousel slide m-5" data-bs-ride="carousel" data-bs-interval="3000" @fadeIn>
+<div class="text-center mb-4">
+  <h4 class="fw-bold">Alertas de Lluvia en Trujillo</h4>
+</div>
 
+<div
+  id="weatherCarousel"
+  class="carousel slide"
+  data-bs-ride="carousel"
+  data-bs-interval="5000"
+>
   <div class="carousel-indicators">
-    <button *ngFor="let grupo of pronosticoAgrupado; let i = index"
+    <button
+      *ngFor="let grupo of pronosticoAgrupado; let i = index"
       type="button"
       [attr.data-bs-target]="'#weatherCarousel'"
       [attr.data-bs-slide-to]="i"
       [class.active]="i === 0"
-      [attr.aria-current]="i === 0 ? 'true' : null"
-      [attr.aria-label]="'Slide ' + (i + 1)"
-      class="bg-secondary">
-    </button>
+      class="bg-dark"
+    ></button>
   </div>
 
-  <div class="carousel-inner">
+  <div class="carousel-inner mb-4">
     <div
-      class="carousel-item"
       *ngFor="let grupo of pronosticoAgrupado; let i = index"
+      class="carousel-item"
       [class.active]="i === 0"
     >
-      <div class="d-flex justify-content-around text-center align-items-center px-5 bg-body-tertiary"
-           style="height: 230px">
-        <div class="flex-column" *ngFor="let hora of grupo">
-          <p class="small"><strong>{{ hora.temp }}°C</strong></p>
-          <i [class]="getIconoClima(hora.descripcion) + ' fs-2 mb-2'" style="color: #ddd;"></i>
-          <p class="mb-0"><strong>{{ hora.hora }}</strong></p>
-          <p class="mb-0 text-muted" style="font-size: .7rem;">{{ hora.lluvia }} mm/h</p>
+      <div
+        class="d-flex justify-content-around text-center align-items-center py-4 px-2 flex-wrap gap-3 mb-4"
+      >
+        <div
+          *ngFor="let hora of grupo"
+          class="flex-column px-3 py-2 rounded bg-white shadow-sm"
+        >
+          <p class="small mb-1 text-dark">
+            <strong>{{ hora.temp }}°C</strong>
+          </p>
+          <i
+            [class]="
+              getIconoClima(hora.descripcion) + ' fs-2 mb-2 text-primary'
+            "
+          ></i>
+          <p class="mb-0 fw-semibold text-dark">{{ hora.hora }}</p>
+          <p class="mb-0 text-muted small">{{ hora.lluvia }} mm/h</p>
         </div>
       </div>
     </div>
   </div>
-
+</div>

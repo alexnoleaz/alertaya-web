@@ -4,10 +4,9 @@
   <div id="mapa" style="height: 350px; border-radius: 8px"></div>
 
   <div class="mt-3">
-    <label for="nombreUbicacion">Nombre de la ubicación:</label>
+    <label class="form-label">Nombre de la ubicación:</label>
     <input
       type="text"
-      id="nombreUbicacion"
       class="form-control"
       [(ngModel)]="nombreUbicacion"
       placeholder="Ej. Mi casa"
@@ -15,10 +14,9 @@
   </div>
 
   <div class="mt-3">
-    <label for="rangoAlerta">Nivel de alerta:</label>
+    <label class="form-label">Nivel de alerta:</label>
     <input
       type="range"
-      id="rangoAlerta"
       class="form-range"
       min="0"
       max="2"
@@ -32,7 +30,7 @@
     </p>
   </div>
 
-  <div class="mt-3 text-center">
+  <div class="mt-3">
     <button
       class="btn btn-dark w-100"
       (click)="registrarUbicacion()"

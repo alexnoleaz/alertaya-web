@@ -9,14 +9,13 @@ import {
   transition,
 } from '@angular/animations';
 
-
 @Component({
   selector: 'app-recomendaciones',
   standalone: true,
   templateUrl: './recomendaciones.component.html',
-  styleUrls: ['./recomendaciones.component.css'],
   imports: [NgFor, NgIf, NgClass],
-  animations: [trigger('fadeIn', [
+  animations: [
+    trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: 0 }),
         animate('400ms ease-in', style({ opacity: 1 })),
@@ -36,7 +35,7 @@ export class RecomendacionesComponent {
     { nombre: 'Pacasmayo', lat: -7.401445, lon: -79.571445 },
     { nombre: 'Pataz', lat: -8.100222, lon: -77.328365 },
     { nombre: 'Sánchez Carrión', lat: -7.813611, lon: -78.045278 },
-    { nombre: 'Santiago de Chuco', lat: -8.1457756, lon: -78.1730961},
+    { nombre: 'Santiago de Chuco', lat: -8.1457756, lon: -78.1730961 },
     { nombre: 'Virú', lat: -8.417136, lon: -78.748108 },
   ];
 
@@ -56,7 +55,7 @@ export class RecomendacionesComponent {
       .obtenerClimaPorCoord(provincia.lat, provincia.lon)
       .subscribe((data) => {
         this.provinciaSeleccionada = provincia;
-        this.lluvia = data.rain?.['1h'] ?? 0;
+        this.lluvia = data.data.rain?.['1h'] ?? 0;
         this.nivel = this.getNivel(this.lluvia);
         this.recomendaciones = this.getRecomendacionesPorNivel(this.nivel);
       });

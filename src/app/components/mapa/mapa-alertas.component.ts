@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { LocalStorageService } from '../../shared/local-storage.service';
 
 @Component({
   selector: 'app-mapa-alertas',
@@ -18,7 +19,13 @@ export class MapaAlertasComponent implements OnInit {
   nombreUbicacion: string = '';
   nivelAlerta: string = 'MODERATE';
 
-  constructor(private http: HttpClient) {}
+  private readonly http: HttpClient;
+  private readonly localStorageService: LocalStorageService;
+
+  constructor(http: HttpClient, localStorageService: LocalStorageService) {
+    this.http = http;
+    this.localStorageService = localStorageService;
+  }
 
   ngOnInit(): void {
     this.inicializarMapa();
@@ -39,8 +46,8 @@ export class MapaAlertasComponent implements OnInit {
       this.latitud = lat;
       this.longitud = lng;
 
-      localStorage.setItem('latitud', lat.toString());
-      localStorage.setItem('longitud', lng.toString());
+      this.localStorageService.set('latitud', lat.toString());
+      this.localStorageService.set('longitud', lng.toString());
 
       this.ubicacionDetectada = true;
 
@@ -60,8 +67,8 @@ export class MapaAlertasComponent implements OnInit {
           this.longitud = position.coords.longitude;
           this.ubicacionDetectada = true;
 
-          localStorage.setItem('latitud', this.latitud.toString());
-          localStorage.setItem('longitud', this.longitud.toString());
+          this.localStorageService.set('latitud', this.latitud.toString());
+          this.localStorageService.set('longitud', this.longitud.toString());
 
           this.mapa.setView([this.latitud, this.longitud], 14);
 
@@ -110,9 +117,6 @@ export class MapaAlertasComponent implements OnInit {
   }
 
   registrarUbicacion(): void {
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-
     const body = {
       name: this.nombreUbicacion,
       latitude: this.latitud,
@@ -120,19 +124,13 @@ export class MapaAlertasComponent implements OnInit {
       alertThreshold: this.nivelAlerta,
     };
 
-    this.http
-      .post('http://localhost:8080/api/alerts', body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .subscribe({
-        next: () => {
-          alert('¡Ubicación registrada exitosamente para recibir alertas!');
-        },
-        error: () => {
-          alert('Hubo un error al registrar tu ubicación.');
-        },
-      });
+    this.http.post('alerts', body).subscribe({
+      next: () => {
+        alert('¡Ubicación registrada exitosamente para recibir alertas!');
+      },
+      error: () => {
+        alert('Hubo un error al registrar tu ubicación.');
+      },
+    });
   }
 }
